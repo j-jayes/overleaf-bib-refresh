@@ -25,10 +25,28 @@ def setup_driver():
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--disable-notifications")
+
+    # Optionally set geolocation to mimic the USA or other regions
+    chrome_options.add_argument("--lang=en-US")  # Set language to US English
+    chrome_options.add_argument("--disable-blink-features=AutomationControlled")  # Reduce bot-like behavior detection
     
     # Initialize WebDriver using ChromeDriverManager
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
     return driver
+
+def handle_cookie_consent(driver):
+    """
+    Dismisses the cookie consent banner if it appears.
+    """
+    try:
+        # Wait for the cookie consent banner and click the "Accept" button
+        cookie_consent_button = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler"))
+        )
+        cookie_consent_button.click()
+        print("Cookie consent banner dismissed.")
+    except Exception as e:
+        print("No cookie consent banner found or error occurred:", str(e))  # Log the error for GitHub Actions logs
 
 def login_orcid(driver, orcid_email, orcid_password):
     """
@@ -36,6 +54,9 @@ def login_orcid(driver, orcid_email, orcid_password):
     """
     # Navigate to Overleaf login page
     driver.get("https://www.overleaf.com/login")
+
+    # Handle cookie consent before proceeding
+    handle_cookie_consent(driver)
     
     # Click the ORCID login button
     orcid_button = WebDriverWait(driver, 15).until(
@@ -65,6 +86,8 @@ def navigate_to_project(driver):
     """
     Navigates to the first project in the list on Overleaf.
     """
+    # wait for 1 second to ensure the page is loaded
+    time.sleep(1)
     try:
         # Wait for project list and click the first project link
         project_link = WebDriverWait(driver, 15).until(
@@ -95,6 +118,8 @@ def refresh_bibliography(driver):
     """
     Clicks the refresh button in the bibliography section.
     """
+    # Wait one second to ensure the page is loaded
+    time.sleep(1)
     try:
         # Wait for the refresh button and click it
         refresh_button = WebDriverWait(driver, 15).until(
