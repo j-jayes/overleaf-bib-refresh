@@ -95,26 +95,19 @@ def login_orcid(driver, orcid_email, orcid_password):
 
 def navigate_to_project(driver):
     """
-    Navigates to the first project in the list on Overleaf.
+    Navigates directly to a specific project on Overleaf.
     """
-    # wait for 4 seconds to ensure the page is loaded
-    time.sleep(4)
     try:
-        # Wait for project list to be present
-        project_link = WebDriverWait(driver, 15).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, "tr:nth-child(1) a"))
-        )
+        # Navigate to the specific project URL
+        driver.get("https://www.overleaf.com/project/66f4186e60aea777158f4a42")
         
-        # Ensure the project link is visible and clickable
+        # Wait for the project page to load by checking for a known element
         WebDriverWait(driver, 15).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, "tr:nth-child(1) a"))
+            EC.presence_of_element_located((By.CSS_SELECTOR, ".name"))
         )
-        
-        # Click the project link
-        project_link.click()
-        print("Successfully navigated to the first project.")
+        print("Successfully navigated to the specific project.")
     except Exception as e:
-        print("Failed to navigate to the project:", str(e))
+        print("Failed to navigate to the specific project:", str(e))
 
 def navigate_to_bibliography(driver):
     """
@@ -158,7 +151,6 @@ try:
     navigate_to_project(driver)
     navigate_to_bibliography(driver)
     refresh_bibliography(driver)
-    print("Bibliography refresh completed successfully.")
     exit(0)  # Exit with success
 except Exception as e:
     print(f"An error occurred: {str(e)}")
