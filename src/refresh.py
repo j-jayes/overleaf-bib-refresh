@@ -44,6 +44,11 @@ def handle_cookie_consent(driver):
             EC.element_to_be_clickable((By.ID, "onetrust-accept-btn-handler"))
         )
         cookie_consent_button.click()
+        
+        # Wait for the cookie consent banner to disappear
+        WebDriverWait(driver, 10).until(
+            EC.invisibility_of_element((By.ID, "onetrust-accept-btn-handler"))
+        )
         print("Cookie consent banner dismissed.")
     except Exception as e:
         print("No cookie consent banner found or error occurred:", str(e))  # Log the error for GitHub Actions logs
@@ -54,15 +59,21 @@ def login_orcid(driver, orcid_email, orcid_password):
     """
     # Navigate to Overleaf login page
     driver.get("https://www.overleaf.com/login")
-
-    # Handle cookie consent before proceeding
-    handle_cookie_consent(driver)
     
     # Click the ORCID login button
     orcid_button = WebDriverWait(driver, 15).until(
         EC.element_to_be_clickable((By.CSS_SELECTOR, ".text-center:nth-child(2) .login-btn"))
     )
     orcid_button.click()
+
+    # sleep for 1 second to ensure the page is loaded
+    time.sleep(1)
+
+    # Handle cookie consent before proceeding
+    handle_cookie_consent(driver)
+
+    # sleep for 1 second to ensure the page is loaded
+    time.sleep(1)
 
     # Wait for ORCID login page to load
     WebDriverWait(driver, 15).until(
