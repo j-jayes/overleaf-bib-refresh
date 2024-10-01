@@ -45,4 +45,4 @@ jobs:
           ORCID_EMAIL: ${{ secrets.ORCID_EMAIL }}  # Store your ORCID credentials in GitHub Secrets
           ORCID_PASSWORD: ${{ secrets.ORCID_PASSWORD }}
         run: |
-          python your_script.py  # Replace with the path to your script
+          python src/refresh.py 
