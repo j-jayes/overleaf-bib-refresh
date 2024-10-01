@@ -66,14 +66,14 @@ def login_orcid(driver, orcid_email, orcid_password):
     )
     orcid_button.click()
 
-    # sleep for 1 second to ensure the page is loaded
-    time.sleep(1)
+    # sleep for 15 seconds to ensure the page is loaded
+    time.sleep(15)
 
     # Handle cookie consent before proceeding
     handle_cookie_consent(driver)
 
-    # sleep for 1 second to ensure the page is loaded
-    time.sleep(1)
+    # sleep for 15 seconds to ensure the page is loaded
+    time.sleep(15)
 
     # Wait for ORCID login page to load
     WebDriverWait(driver, 15).until(
@@ -114,7 +114,7 @@ def navigate_to_bibliography(driver):
     Navigates to the bibliography section of the project.
     """
     # Adding a short wait to ensure the project page is fully loaded
-    time.sleep(1)
+    time.sleep(15)
     try:
         # Wait for the bibliography link and click it
         bibliography_link = WebDriverWait(driver, 15).until(
@@ -129,8 +129,8 @@ def refresh_bibliography(driver):
     """
     Clicks the refresh button in the bibliography section.
     """
-    # Wait one second to ensure the page is loaded
-    time.sleep(1)
+    # Wait 15 second to ensure the page is loaded
+    time.sleep(15)
     try:
         # Wait for the refresh button and click it
         refresh_button = WebDriverWait(driver, 15).until(
