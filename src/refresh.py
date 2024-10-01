@@ -97,13 +97,20 @@ def navigate_to_project(driver):
     """
     Navigates to the first project in the list on Overleaf.
     """
-    # wait for 1 second to ensure the page is loaded
-    time.sleep(1)
+    # wait for 4 seconds to ensure the page is loaded
+    time.sleep(4)
     try:
-        # Wait for project list and click the first project link
+        # Wait for project list to be present
         project_link = WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "tr:nth-child(1) a"))
+        )
+        
+        # Ensure the project link is visible and clickable
+        WebDriverWait(driver, 15).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "tr:nth-child(1) a"))
         )
+        
+        # Click the project link
         project_link.click()
         print("Successfully navigated to the first project.")
     except Exception as e:
