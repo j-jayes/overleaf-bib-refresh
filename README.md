@@ -16,8 +16,8 @@ This project contains a Python Selenium script that automatically logs into Over
 
 The main Python script that performs the following tasks:
 
-1. **Login to Overleaf**: Uses your ORCID credentials to log into your Overleaf account.
-2. **Navigate to the Project**: Clicks the first project on your Overleaf dashboard.
+1. **Login to Overleaf**: Uses your ORCID credentials to log into your Overleaf account. Using ORCID credentials bypasses the CAPTCHA that Overleaf natively imposes.
+2. **Navigate to the Project**: Navigates to the project specified by URL.
 3. **Navigate to the Bibliography**: Locates and navigates to the bibliography file in the selected project.
 4. **Refresh the Bibliography**: Clicks the "Refresh" button to update the bibliography.
 
@@ -48,7 +48,7 @@ ORCID_EMAIL=your_orcid_email@example.com
 ORCID_PASSWORD=your_orcid_password
 ```
 
-You need to add these as secrets in your GitHub repo if you're using GitHub Actions.
+You need to add these as secrets in your GitHub repo if you're using GitHub Actions. There is a step in the workflow that does this.
 
 ### `README.md`
 
