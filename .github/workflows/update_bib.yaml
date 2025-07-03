@@ -7,6 +7,7 @@ on:
       - main  # Or the branch you want to use
   schedule:
     - cron: '*/15 * * * *'  # Runs every 15 minutes
+  workflow_dispatch:  # Allows manual triggering from the GitHub UI
 
 jobs:
   run-selenium:
