@@ -29,7 +29,7 @@ def setup_driver():
     """Sets up the Selenium WebDriver for Chrome."""
     chrome_options = Options()
     # Use headless mode for automated runs (e.g., GitHub Actions, CRON)
-    # chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--window-size=1920,1080")
