@@ -39,11 +39,15 @@ jobs:
         run: |
           echo "ORCID_EMAIL=${{ secrets.ORCID_EMAIL }}" >> .env
           echo "ORCID_PASSWORD=${{ secrets.ORCID_PASSWORD }}" >> .env
+          echo "OVERLEAF_PROJECT_URL=${{ secrets.OVERLEAF_PROJECT_URL }}" >> .env
+          echo "BIB_FILENAME=${{ secrets.BIB_FILENAME }}" >> .env
 
       # Run the Selenium script
       - name: Run Selenium script
         env:
           ORCID_EMAIL: ${{ secrets.ORCID_EMAIL }}  # Store your ORCID credentials in GitHub Secrets
           ORCID_PASSWORD: ${{ secrets.ORCID_PASSWORD }}
+          OVERLEAF_PROJECT_URL: ${{ secrets.OVERLEAF_PROJECT_URL }}
+          BIB_FILENAME: ${{ secrets.BIB_FILENAME }}
         run: |
           python src/refresh.py 
